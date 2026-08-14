@@ -196,7 +196,7 @@ export type UsuarioGroupByOutputType = {
   nombre_completo: string
   usuario: string
   contrasena: string
-  correo: string
+  correo: string | null
   activo: number
   fecha_creacion: Date
   _count: UsuarioCountAggregateOutputType | null
@@ -229,7 +229,7 @@ export type UsuarioWhereInput = {
   nombre_completo?: Prisma.StringFilter<"Usuario"> | string
   usuario?: Prisma.StringFilter<"Usuario"> | string
   contrasena?: Prisma.StringFilter<"Usuario"> | string
-  correo?: Prisma.StringFilter<"Usuario"> | string
+  correo?: Prisma.StringNullableFilter<"Usuario"> | string | null
   activo?: Prisma.IntFilter<"Usuario"> | number
   fecha_creacion?: Prisma.DateTimeFilter<"Usuario"> | Date | string
   usuario_funcion?: Prisma.Usuario_FuncionListRelationFilter
@@ -240,7 +240,7 @@ export type UsuarioOrderByWithRelationInput = {
   nombre_completo?: Prisma.SortOrder
   usuario?: Prisma.SortOrder
   contrasena?: Prisma.SortOrder
-  correo?: Prisma.SortOrder
+  correo?: Prisma.SortOrderInput | Prisma.SortOrder
   activo?: Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
   usuario_funcion?: Prisma.Usuario_FuncionOrderByRelationAggregateInput
@@ -255,7 +255,7 @@ export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
   nombre_completo?: Prisma.StringFilter<"Usuario"> | string
   usuario?: Prisma.StringFilter<"Usuario"> | string
   contrasena?: Prisma.StringFilter<"Usuario"> | string
-  correo?: Prisma.StringFilter<"Usuario"> | string
+  correo?: Prisma.StringNullableFilter<"Usuario"> | string | null
   activo?: Prisma.IntFilter<"Usuario"> | number
   fecha_creacion?: Prisma.DateTimeFilter<"Usuario"> | Date | string
   usuario_funcion?: Prisma.Usuario_FuncionListRelationFilter
@@ -266,7 +266,7 @@ export type UsuarioOrderByWithAggregationInput = {
   nombre_completo?: Prisma.SortOrder
   usuario?: Prisma.SortOrder
   contrasena?: Prisma.SortOrder
-  correo?: Prisma.SortOrder
+  correo?: Prisma.SortOrderInput | Prisma.SortOrder
   activo?: Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
   _count?: Prisma.UsuarioCountOrderByAggregateInput
@@ -284,28 +284,28 @@ export type UsuarioScalarWhereWithAggregatesInput = {
   nombre_completo?: Prisma.StringWithAggregatesFilter<"Usuario"> | string
   usuario?: Prisma.StringWithAggregatesFilter<"Usuario"> | string
   contrasena?: Prisma.StringWithAggregatesFilter<"Usuario"> | string
-  correo?: Prisma.StringWithAggregatesFilter<"Usuario"> | string
+  correo?: Prisma.StringNullableWithAggregatesFilter<"Usuario"> | string | null
   activo?: Prisma.IntWithAggregatesFilter<"Usuario"> | number
   fecha_creacion?: Prisma.DateTimeWithAggregatesFilter<"Usuario"> | Date | string
 }
 
 export type UsuarioCreateInput = {
-  id_usuario: string
+  id_usuario?: string
   nombre_completo: string
   usuario: string
   contrasena: string
-  correo: string
+  correo?: string | null
   activo: number
   fecha_creacion: Date | string
   usuario_funcion?: Prisma.Usuario_FuncionCreateNestedManyWithoutIdusuarioInput
 }
 
 export type UsuarioUncheckedCreateInput = {
-  id_usuario: string
+  id_usuario?: string
   nombre_completo: string
   usuario: string
   contrasena: string
-  correo: string
+  correo?: string | null
   activo: number
   fecha_creacion: Date | string
   usuario_funcion?: Prisma.Usuario_FuncionUncheckedCreateNestedManyWithoutIdusuarioInput
@@ -316,7 +316,7 @@ export type UsuarioUpdateInput = {
   nombre_completo?: Prisma.StringFieldUpdateOperationsInput | string
   usuario?: Prisma.StringFieldUpdateOperationsInput | string
   contrasena?: Prisma.StringFieldUpdateOperationsInput | string
-  correo?: Prisma.StringFieldUpdateOperationsInput | string
+  correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activo?: Prisma.IntFieldUpdateOperationsInput | number
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usuario_funcion?: Prisma.Usuario_FuncionUpdateManyWithoutIdusuarioNestedInput
@@ -327,18 +327,18 @@ export type UsuarioUncheckedUpdateInput = {
   nombre_completo?: Prisma.StringFieldUpdateOperationsInput | string
   usuario?: Prisma.StringFieldUpdateOperationsInput | string
   contrasena?: Prisma.StringFieldUpdateOperationsInput | string
-  correo?: Prisma.StringFieldUpdateOperationsInput | string
+  correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activo?: Prisma.IntFieldUpdateOperationsInput | number
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usuario_funcion?: Prisma.Usuario_FuncionUncheckedUpdateManyWithoutIdusuarioNestedInput
 }
 
 export type UsuarioCreateManyInput = {
-  id_usuario: string
+  id_usuario?: string
   nombre_completo: string
   usuario: string
   contrasena: string
-  correo: string
+  correo?: string | null
   activo: number
   fecha_creacion: Date | string
 }
@@ -348,7 +348,7 @@ export type UsuarioUpdateManyMutationInput = {
   nombre_completo?: Prisma.StringFieldUpdateOperationsInput | string
   usuario?: Prisma.StringFieldUpdateOperationsInput | string
   contrasena?: Prisma.StringFieldUpdateOperationsInput | string
-  correo?: Prisma.StringFieldUpdateOperationsInput | string
+  correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activo?: Prisma.IntFieldUpdateOperationsInput | number
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -358,7 +358,7 @@ export type UsuarioUncheckedUpdateManyInput = {
   nombre_completo?: Prisma.StringFieldUpdateOperationsInput | string
   usuario?: Prisma.StringFieldUpdateOperationsInput | string
   contrasena?: Prisma.StringFieldUpdateOperationsInput | string
-  correo?: Prisma.StringFieldUpdateOperationsInput | string
+  correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activo?: Prisma.IntFieldUpdateOperationsInput | number
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -416,6 +416,10 @@ export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -443,21 +447,21 @@ export type UsuarioUpdateOneRequiredWithoutUsuario_funcionNestedInput = {
 }
 
 export type UsuarioCreateWithoutUsuario_funcionInput = {
-  id_usuario: string
+  id_usuario?: string
   nombre_completo: string
   usuario: string
   contrasena: string
-  correo: string
+  correo?: string | null
   activo: number
   fecha_creacion: Date | string
 }
 
 export type UsuarioUncheckedCreateWithoutUsuario_funcionInput = {
-  id_usuario: string
+  id_usuario?: string
   nombre_completo: string
   usuario: string
   contrasena: string
-  correo: string
+  correo?: string | null
   activo: number
   fecha_creacion: Date | string
 }
@@ -483,7 +487,7 @@ export type UsuarioUpdateWithoutUsuario_funcionInput = {
   nombre_completo?: Prisma.StringFieldUpdateOperationsInput | string
   usuario?: Prisma.StringFieldUpdateOperationsInput | string
   contrasena?: Prisma.StringFieldUpdateOperationsInput | string
-  correo?: Prisma.StringFieldUpdateOperationsInput | string
+  correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activo?: Prisma.IntFieldUpdateOperationsInput | number
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -493,7 +497,7 @@ export type UsuarioUncheckedUpdateWithoutUsuario_funcionInput = {
   nombre_completo?: Prisma.StringFieldUpdateOperationsInput | string
   usuario?: Prisma.StringFieldUpdateOperationsInput | string
   contrasena?: Prisma.StringFieldUpdateOperationsInput | string
-  correo?: Prisma.StringFieldUpdateOperationsInput | string
+  correo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activo?: Prisma.IntFieldUpdateOperationsInput | number
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -569,7 +573,7 @@ export type $UsuarioPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     nombre_completo: string
     usuario: string
     contrasena: string
-    correo: string
+    correo: string | null
     activo: number
     fecha_creacion: Date
   }, ExtArgs["result"]["usuario"]>

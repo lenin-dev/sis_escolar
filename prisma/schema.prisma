@@ -1,45 +1,39 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-    provider = "prisma-client"
-    output   = "../src/generated/prisma"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
-    provider = "mysql"
+  provider = "mysql"
 }
 
-// ------------- LOGIN MODELS -----------------
 model Usuario {
-    id_usuario          String @id @db.VarChar(10)
-    nombre_completo     String @db.VarChar(50)
-    usuario             String @db.VarChar(50)
-    contrasena          String @db.VarChar(100)
-    correo              String @db.VarChar(50)
-    activo              Int    @db.TinyInt
-    fecha_creacion      DateTime @db.Timestamp(0)
-
-    usuario_funcion     Usuario_Funcion[]
+  id_usuario      String            @id @default(uuid())
+  nombre_completo String            @db.VarChar(50)
+  usuario         String            @db.VarChar(50)
+  contrasena      String            @db.VarChar(100)
+  correo          String?            @db.VarChar(50)
+  activo          Int               @db.TinyInt
+  fecha_creacion  DateTime          @db.Timestamp(0)
+  usuario_funcion Usuario_Funcion[]
 }
 
 model Funciones {
-    id_funcion          Int @id @default(autoincrement()) 
-    nombre_funcion      String @db.VarChar(50)
-    descripcion         String @db.VarChar(100)
-    fecha_creacion      DateTime @db.Timestamp(0)
-
-    funcion_funcion     Usuario_Funcion[]
+  id_funcion      Int               @id @default(autoincrement())
+  nombre_funcion  String            @db.VarChar(50)
+  descripcion     String            @db.VarChar(100)
+  fecha_creacion  DateTime          @db.Timestamp(0)
+  funcion_funcion Usuario_Funcion[]
 }
 
 model Usuario_Funcion {
-    id_usu_fun          Int @id @default(autoincrement())
-    idusuario           Usuario @relation(fields: [id_usuario], references: [id_usuario]) 
-    id_usuario          String @db.VarChar(10)
-    idfuncion           Funciones @relation(fields: [id_funcion], references: [id_funcion]) 
-    id_funcion          Int
-    fecha_asignacion    DateTime @db.Timestamp(0)
+  id_usu_fun       Int       @id @default(autoincrement())
+  id_usuario       String
+  id_funcion       Int
+  fecha_asignacion DateTime  @db.Timestamp(0)
+  idfuncion        Funciones @relation(fields: [id_funcion], references: [id_funcion])
+  idusuario        Usuario   @relation(fields: [id_usuario], references: [id_usuario])
+
+  @@index([id_funcion], map: "Usuario_Funcion_id_funcion_fkey")
+  @@index([id_usuario], map: "Usuario_Funcion_id_usuario_fkey")
 }
-// ------------- END LOGIN MODELS -----------------

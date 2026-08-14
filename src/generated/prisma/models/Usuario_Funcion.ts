@@ -212,8 +212,8 @@ export type Usuario_FuncionWhereInput = {
   id_usuario?: Prisma.StringFilter<"Usuario_Funcion"> | string
   id_funcion?: Prisma.IntFilter<"Usuario_Funcion"> | number
   fecha_asignacion?: Prisma.DateTimeFilter<"Usuario_Funcion"> | Date | string
-  idusuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   idfuncion?: Prisma.XOR<Prisma.FuncionesScalarRelationFilter, Prisma.FuncionesWhereInput>
+  idusuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
 }
 
 export type Usuario_FuncionOrderByWithRelationInput = {
@@ -221,8 +221,8 @@ export type Usuario_FuncionOrderByWithRelationInput = {
   id_usuario?: Prisma.SortOrder
   id_funcion?: Prisma.SortOrder
   fecha_asignacion?: Prisma.SortOrder
-  idusuario?: Prisma.UsuarioOrderByWithRelationInput
   idfuncion?: Prisma.FuncionesOrderByWithRelationInput
+  idusuario?: Prisma.UsuarioOrderByWithRelationInput
   _relevance?: Prisma.Usuario_FuncionOrderByRelevanceInput
 }
 
@@ -234,8 +234,8 @@ export type Usuario_FuncionWhereUniqueInput = Prisma.AtLeast<{
   id_usuario?: Prisma.StringFilter<"Usuario_Funcion"> | string
   id_funcion?: Prisma.IntFilter<"Usuario_Funcion"> | number
   fecha_asignacion?: Prisma.DateTimeFilter<"Usuario_Funcion"> | Date | string
-  idusuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   idfuncion?: Prisma.XOR<Prisma.FuncionesScalarRelationFilter, Prisma.FuncionesWhereInput>
+  idusuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
 }, "id_usu_fun">
 
 export type Usuario_FuncionOrderByWithAggregationInput = {
@@ -262,8 +262,8 @@ export type Usuario_FuncionScalarWhereWithAggregatesInput = {
 
 export type Usuario_FuncionCreateInput = {
   fecha_asignacion: Date | string
-  idusuario: Prisma.UsuarioCreateNestedOneWithoutUsuario_funcionInput
   idfuncion: Prisma.FuncionesCreateNestedOneWithoutFuncion_funcionInput
+  idusuario: Prisma.UsuarioCreateNestedOneWithoutUsuario_funcionInput
 }
 
 export type Usuario_FuncionUncheckedCreateInput = {
@@ -275,8 +275,8 @@ export type Usuario_FuncionUncheckedCreateInput = {
 
 export type Usuario_FuncionUpdateInput = {
   fecha_asignacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  idusuario?: Prisma.UsuarioUpdateOneRequiredWithoutUsuario_funcionNestedInput
   idfuncion?: Prisma.FuncionesUpdateOneRequiredWithoutFuncion_funcionNestedInput
+  idusuario?: Prisma.UsuarioUpdateOneRequiredWithoutUsuario_funcionNestedInput
 }
 
 export type Usuario_FuncionUncheckedUpdateInput = {
@@ -572,8 +572,8 @@ export type Usuario_FuncionSelect<ExtArgs extends runtime.Types.Extensions.Inter
   id_usuario?: boolean
   id_funcion?: boolean
   fecha_asignacion?: boolean
-  idusuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   idfuncion?: boolean | Prisma.FuncionesDefaultArgs<ExtArgs>
+  idusuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["usuario_Funcion"]>
 
 
@@ -587,15 +587,15 @@ export type Usuario_FuncionSelectScalar = {
 
 export type Usuario_FuncionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_usu_fun" | "id_usuario" | "id_funcion" | "fecha_asignacion", ExtArgs["result"]["usuario_Funcion"]>
 export type Usuario_FuncionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  idusuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   idfuncion?: boolean | Prisma.FuncionesDefaultArgs<ExtArgs>
+  idusuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
 }
 
 export type $Usuario_FuncionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Usuario_Funcion"
   objects: {
-    idusuario: Prisma.$UsuarioPayload<ExtArgs>
     idfuncion: Prisma.$FuncionesPayload<ExtArgs>
+    idusuario: Prisma.$UsuarioPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id_usu_fun: number
@@ -942,8 +942,8 @@ readonly fields: Usuario_FuncionFieldRefs;
  */
 export interface Prisma__Usuario_FuncionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  idusuario<T extends Prisma.UsuarioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsuarioDefaultArgs<ExtArgs>>): Prisma.Prisma__UsuarioClient<runtime.Types.Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   idfuncion<T extends Prisma.FuncionesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FuncionesDefaultArgs<ExtArgs>>): Prisma.Prisma__FuncionesClient<runtime.Types.Result.GetResult<Prisma.$FuncionesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  idusuario<T extends Prisma.UsuarioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsuarioDefaultArgs<ExtArgs>>): Prisma.Prisma__UsuarioClient<runtime.Types.Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
