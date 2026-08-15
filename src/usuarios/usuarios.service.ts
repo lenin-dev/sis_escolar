@@ -17,7 +17,7 @@ export class UsuariosService {
         return result;
     }
 
-    async getUsuarioById(id_usuario: string) {
+    async getOneUsuario(id_usuario: string) {
         const data = await this.prismaService.usuario.findFirst({
             where: { 
                 OR: [
@@ -47,7 +47,7 @@ export class UsuariosService {
         if(!data) {
             throw new NotFoundException('Información vacia para editar')
         }
-        await this.getUsuarioById(id_usuario);
+        await this.getOneUsuario(id_usuario);
         const usuarioData: any = { ...data };
         if (usuarioData.contrasena) {
             usuarioData.contrasena = await hashPassword(usuarioData.contrasena);
@@ -59,7 +59,7 @@ export class UsuariosService {
     }
 
     async deleteUsuario(id_usuario: string) {
-        await this.getUsuarioById(id_usuario);
+        await this.getOneUsuario(id_usuario);
         return await this.prismaService.usuario.delete({
             where: { id_usuario: id_usuario },
         });
