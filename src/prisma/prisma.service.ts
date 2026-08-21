@@ -5,6 +5,7 @@ import 'dotenv/config';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
+    static PrismaClientKnownRequestError: unknown;
 
     constructor() {
         const adapter = new PrismaMariaDb({

@@ -176,7 +176,7 @@ export type FuncionesGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 export type FuncionesGroupByOutputType = {
   id_funcion: number
   nombre_funcion: string
-  descripcion: string
+  descripcion: string | null
   fecha_creacion: Date
   _count: FuncionesCountAggregateOutputType | null
   _avg: FuncionesAvgAggregateOutputType | null
@@ -206,7 +206,7 @@ export type FuncionesWhereInput = {
   NOT?: Prisma.FuncionesWhereInput | Prisma.FuncionesWhereInput[]
   id_funcion?: Prisma.IntFilter<"Funciones"> | number
   nombre_funcion?: Prisma.StringFilter<"Funciones"> | string
-  descripcion?: Prisma.StringFilter<"Funciones"> | string
+  descripcion?: Prisma.StringNullableFilter<"Funciones"> | string | null
   fecha_creacion?: Prisma.DateTimeFilter<"Funciones"> | Date | string
   funcion_funcion?: Prisma.Usuario_FuncionListRelationFilter
 }
@@ -214,7 +214,7 @@ export type FuncionesWhereInput = {
 export type FuncionesOrderByWithRelationInput = {
   id_funcion?: Prisma.SortOrder
   nombre_funcion?: Prisma.SortOrder
-  descripcion?: Prisma.SortOrder
+  descripcion?: Prisma.SortOrderInput | Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
   funcion_funcion?: Prisma.Usuario_FuncionOrderByRelationAggregateInput
   _relevance?: Prisma.FuncionesOrderByRelevanceInput
@@ -226,7 +226,7 @@ export type FuncionesWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.FuncionesWhereInput[]
   NOT?: Prisma.FuncionesWhereInput | Prisma.FuncionesWhereInput[]
   nombre_funcion?: Prisma.StringFilter<"Funciones"> | string
-  descripcion?: Prisma.StringFilter<"Funciones"> | string
+  descripcion?: Prisma.StringNullableFilter<"Funciones"> | string | null
   fecha_creacion?: Prisma.DateTimeFilter<"Funciones"> | Date | string
   funcion_funcion?: Prisma.Usuario_FuncionListRelationFilter
 }, "id_funcion">
@@ -234,7 +234,7 @@ export type FuncionesWhereUniqueInput = Prisma.AtLeast<{
 export type FuncionesOrderByWithAggregationInput = {
   id_funcion?: Prisma.SortOrder
   nombre_funcion?: Prisma.SortOrder
-  descripcion?: Prisma.SortOrder
+  descripcion?: Prisma.SortOrderInput | Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
   _count?: Prisma.FuncionesCountOrderByAggregateInput
   _avg?: Prisma.FuncionesAvgOrderByAggregateInput
@@ -249,13 +249,13 @@ export type FuncionesScalarWhereWithAggregatesInput = {
   NOT?: Prisma.FuncionesScalarWhereWithAggregatesInput | Prisma.FuncionesScalarWhereWithAggregatesInput[]
   id_funcion?: Prisma.IntWithAggregatesFilter<"Funciones"> | number
   nombre_funcion?: Prisma.StringWithAggregatesFilter<"Funciones"> | string
-  descripcion?: Prisma.StringWithAggregatesFilter<"Funciones"> | string
+  descripcion?: Prisma.StringNullableWithAggregatesFilter<"Funciones"> | string | null
   fecha_creacion?: Prisma.DateTimeWithAggregatesFilter<"Funciones"> | Date | string
 }
 
 export type FuncionesCreateInput = {
   nombre_funcion: string
-  descripcion: string
+  descripcion?: string | null
   fecha_creacion: Date | string
   funcion_funcion?: Prisma.Usuario_FuncionCreateNestedManyWithoutIdfuncionInput
 }
@@ -263,14 +263,14 @@ export type FuncionesCreateInput = {
 export type FuncionesUncheckedCreateInput = {
   id_funcion?: number
   nombre_funcion: string
-  descripcion: string
+  descripcion?: string | null
   fecha_creacion: Date | string
   funcion_funcion?: Prisma.Usuario_FuncionUncheckedCreateNestedManyWithoutIdfuncionInput
 }
 
 export type FuncionesUpdateInput = {
   nombre_funcion?: Prisma.StringFieldUpdateOperationsInput | string
-  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   funcion_funcion?: Prisma.Usuario_FuncionUpdateManyWithoutIdfuncionNestedInput
 }
@@ -278,7 +278,7 @@ export type FuncionesUpdateInput = {
 export type FuncionesUncheckedUpdateInput = {
   id_funcion?: Prisma.IntFieldUpdateOperationsInput | number
   nombre_funcion?: Prisma.StringFieldUpdateOperationsInput | string
-  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   funcion_funcion?: Prisma.Usuario_FuncionUncheckedUpdateManyWithoutIdfuncionNestedInput
 }
@@ -286,20 +286,20 @@ export type FuncionesUncheckedUpdateInput = {
 export type FuncionesCreateManyInput = {
   id_funcion?: number
   nombre_funcion: string
-  descripcion: string
+  descripcion?: string | null
   fecha_creacion: Date | string
 }
 
 export type FuncionesUpdateManyMutationInput = {
   nombre_funcion?: Prisma.StringFieldUpdateOperationsInput | string
-  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FuncionesUncheckedUpdateManyInput = {
   id_funcion?: Prisma.IntFieldUpdateOperationsInput | number
   nombre_funcion?: Prisma.StringFieldUpdateOperationsInput | string
-  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -359,14 +359,14 @@ export type FuncionesUpdateOneRequiredWithoutFuncion_funcionNestedInput = {
 
 export type FuncionesCreateWithoutFuncion_funcionInput = {
   nombre_funcion: string
-  descripcion: string
+  descripcion?: string | null
   fecha_creacion: Date | string
 }
 
 export type FuncionesUncheckedCreateWithoutFuncion_funcionInput = {
   id_funcion?: number
   nombre_funcion: string
-  descripcion: string
+  descripcion?: string | null
   fecha_creacion: Date | string
 }
 
@@ -388,14 +388,14 @@ export type FuncionesUpdateToOneWithWhereWithoutFuncion_funcionInput = {
 
 export type FuncionesUpdateWithoutFuncion_funcionInput = {
   nombre_funcion?: Prisma.StringFieldUpdateOperationsInput | string
-  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FuncionesUncheckedUpdateWithoutFuncion_funcionInput = {
   id_funcion?: Prisma.IntFieldUpdateOperationsInput | number
   nombre_funcion?: Prisma.StringFieldUpdateOperationsInput | string
-  descripcion?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -462,7 +462,7 @@ export type $FuncionesPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id_funcion: number
     nombre_funcion: string
-    descripcion: string
+    descripcion: string | null
     fecha_creacion: Date
   }, ExtArgs["result"]["funciones"]>
   composites: {}

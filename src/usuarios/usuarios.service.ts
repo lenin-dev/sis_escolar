@@ -3,15 +3,26 @@ import { PrismaService } from '../prisma/prisma.service.js';
 import { hashPassword, comparePasswords } from '../common/crypt/hash.crypt.js';
 import { CrearUsuario } from './dto/create-usuarios.dto.js';
 import { EditarUsuario } from './dto/update-usuarios.dto.js';
+import { QuerysObligatoriasDto } from '../common/dto/paginacion-query.dto.js';
 
 @Injectable()
 export class UsuariosService {
 
     constructor(private readonly prismaService: PrismaService) {}
 
-    async getAllUsuarios() {
-        const result = await this.prismaService.usuario.findMany();
-        if(!result) {
+    async getAllUsuarios(querys: QuerysObligatoriasDto) {
+        const { limite, pagina, ordenar, campo_ordenar } = querys;
+        const skip = (pagina - 1) * limite;
+
+        const result = await this.prismaService.usuario.findMany({
+            take: limite,
+            skip,
+            orderBy: {
+                [campo_ordenar]: ordenar.toLowerCase() as 'asc' | 'desc',
+            },
+        });
+
+        if(result.length === 0) {
            throw new NotFoundException('No hay datos que mostrar');
         }
         return result;

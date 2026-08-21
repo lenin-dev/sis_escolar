@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Put, Delete, Req, Res, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Req, Res, Param, Body, Query } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { UsuariosService } from './usuarios.service.js';
 import { CrearUsuario } from './dto/create-usuarios.dto.js';
 import { EditarUsuario } from './dto/update-usuarios.dto.js';
+import { QuerysObligatoriasDto } from '../common/dto/paginacion-query.dto.js';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('/usuarios')
@@ -12,8 +13,8 @@ export class UsuariosController {
     constructor(private readonly usuariosService: UsuariosService) {}
 
     @Get()
-    async getAllUsuarios(@Req() req: Request, @Res() res: Response) {
-        const usuarios = await this.usuariosService.getAllUsuarios();
+    async getAllUsuarios(@Req() req: Request, @Res() res: Response, @Query() querys: QuerysObligatoriasDto) {
+        const usuarios = await this.usuariosService.getAllUsuarios(querys);
         res.json(usuarios);
     }
 

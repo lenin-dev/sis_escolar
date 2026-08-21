@@ -21,7 +21,7 @@ model Usuario {
 model Funciones {
   id_funcion      Int               @id @default(autoincrement())
   nombre_funcion  String            @db.VarChar(50)
-  descripcion     String            @db.VarChar(100)
+  descripcion     String?           @db.VarChar(100)
   fecha_creacion  DateTime          @db.Timestamp(0)
   funcion_funcion Usuario_Funcion[]
 }

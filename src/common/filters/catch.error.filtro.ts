@@ -1,6 +1,7 @@
 // src/common/filters/all-exceptions.filter.ts
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus, Logger, } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { Prisma } from '../../generated/prisma/client.js';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -32,6 +33,29 @@ export class AllExceptionsFilter implements ExceptionFilter {
                     }
                 ).message;
             }
+        } else if (exception instanceof Prisma.PrismaClientKnownRequestError) {
+            status = HttpStatus.BAD_REQUEST;
+
+            switch (exception.code) {
+                case 'P2002':
+                    message = `Ya existe un registro con ese valor: ${exception.meta?.target}`;
+                    break;
+                case 'P2025':
+                    status = HttpStatus.NOT_FOUND;
+                    message = 'Registro no encontrado';
+                    break;
+                case 'P2003':
+                    message = 'Violación de llave foránea (relación inválida)';
+                    break;
+                default:
+                    message = `Error de base de datos (código ${exception.code})`;
+            }
+        } else if (exception instanceof Prisma.PrismaClientValidationError) {
+            status = HttpStatus.BAD_REQUEST;
+            message = 'Datos o parámetros inválidos en la consulta a la base de datos';
+        } else if (exception instanceof Prisma.PrismaClientInitializationError) {
+            status = HttpStatus.SERVICE_UNAVAILABLE;
+            message = 'No se pudo conectar a la base de datos';
         } else if (exception instanceof Error) {
             message = exception.message;
         }
