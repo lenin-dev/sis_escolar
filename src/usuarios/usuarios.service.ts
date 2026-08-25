@@ -11,14 +11,14 @@ export class UsuariosService {
     constructor(private readonly prismaService: PrismaService) {}
 
     async getAllUsuarios(querys: QuerysObligatoriasDto) {
-        const { limite, pagina, ordenar, campo_ordenar } = querys;
+        const { limite, pagina, ordenar } = querys;
         const skip = (pagina - 1) * limite;
 
         const result = await this.prismaService.usuario.findMany({
             take: limite,
             skip,
             orderBy: {
-                [campo_ordenar]: ordenar.toLowerCase() as 'asc' | 'desc',
+                fecha_creacion: ordenar.toLowerCase() as 'asc' | 'desc',
             },
         });
 
@@ -28,14 +28,22 @@ export class UsuariosService {
         return result;
     }
 
-    async getOneUsuario(id_usuario: string) {
-        const data = await this.prismaService.usuario.findFirst({
+    async getOneUsuario(id_usuario: string, querys: QuerysObligatoriasDto) {
+        const { limite, pagina, ordenar } = querys;
+        const skip = (pagina - 1) * limite;
+
+        const data = await this.prismaService.usuario.findMany({
             where: { 
                 OR: [
                     { id_usuario: id_usuario }, 
                     { usuario: { contains: id_usuario } }, 
                     { nombre_completo: { contains: id_usuario } } 
                 ]
+            },
+            take: limite,
+            skip,
+            orderBy: {
+                fecha_creacion: ordenar.toLowerCase() as 'asc' | 'desc',
             },
         })
         if(!data) {
@@ -58,7 +66,7 @@ export class UsuariosService {
         if(!data) {
             throw new NotFoundException('Información vacia para editar')
         }
-        await this.getOneUsuario(id_usuario);
+        await this.getOneUsuario(id_usuario, { limite: 999999, pagina: 1, ordenar: 'desc' });
         const usuarioData: any = { ...data };
         if (usuarioData.contrasena) {
             usuarioData.contrasena = await hashPassword(usuarioData.contrasena);
@@ -70,7 +78,7 @@ export class UsuariosService {
     }
 
     async deleteUsuario(id_usuario: string) {
-        await this.getOneUsuario(id_usuario);
+        await this.getOneUsuario(id_usuario, { limite: 999999, pagina: 1, ordenar: 'desc' });
         return await this.prismaService.usuario.delete({
             where: { id_usuario: id_usuario },
         });

@@ -5,5 +5,6 @@ import { FuncionesModule } from './funciones/funciones.module.js';
 
 @Module({
   imports: [UsuariosModule, PrismaModule, FuncionesModule],
+  providers: [],
 })
 export class AppModule {}

@@ -5,7 +5,7 @@ export class EditarFuncionDto {
 
     @ApiPropertyOptional({
         description: 'Nombre de la funcion',
-        example: 'juan99',
+        example: 'ver_usuario2',
     })
     @IsString({ message: 'funcion tiene que ser de tipo texto' })
     @IsOptional({ message: 'funcion no puede ser vacio' })
@@ -13,7 +13,7 @@ export class EditarFuncionDto {
 
     @ApiPropertyOptional({
         description: 'Descripcion de la funcion',
-        example: 'juanpass123456',
+        example: 'ver todos los usuarios 2',
     })
     @IsString({ message: 'funcion tiene que ser de tipo texto' })
     @IsOptional()

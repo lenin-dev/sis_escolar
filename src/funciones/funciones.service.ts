@@ -10,14 +10,14 @@ export class FuncionesService {
     constructor(private readonly prismaService: PrismaService) {}
 
     async getAllFunciones(querys: QuerysObligatoriasDto) {
-        const { limite, pagina, ordenar, campo_ordenar } = querys;
+        const { limite, pagina, ordenar } = querys;
         const skip = (pagina - 1) * limite;
 
         const result = await this.prismaService.funciones.findMany({
             take: limite,
             skip,
             orderBy: {
-                [campo_ordenar]: ordenar.toLowerCase() as 'asc' | 'desc',
+                fecha_creacion: ordenar.toLowerCase() as 'asc' | 'desc',
             },
         });
         if(result.length === 0) {
@@ -47,12 +47,12 @@ export class FuncionesService {
         return result;
     }
 
-    async editFunciones(idfuncion: number, datos: EditarFuncionDto) {
+    async editFunciones(id_funcion: number, datos: EditarFuncionDto) {
         if(!datos) { throw new NotFoundException('Información vacia para editar') }
-        await this.getOneFuncion(idfuncion);
+        await this.getOneFuncion(id_funcion);
 
         const result = await this.prismaService.funciones.update({
-            where: { id_funcion: idfuncion },
+            where: { id_funcion: id_funcion },
             data: datos
         });
 

@@ -5,7 +5,7 @@ export class CrearFuncionDto {
 
     @ApiProperty({
         description: 'Nombre de la funcion',
-        example: 'juan99',
+        example: 'ver_usuarios',
     })
     @IsString({ message: 'funcion tiene que ser de tipo texto' })
     @IsNotEmpty({ message: 'funcion no puede ser vacio' })
@@ -13,7 +13,7 @@ export class CrearFuncionDto {
 
     @ApiPropertyOptional({
         description: 'Descripcion de la funcion',
-        example: 'juanpass123456',
+        example: 'ver todos los usuarios',
     })
     @IsString({ message: 'funcion tiene que ser de tipo texto' })
     @IsOptional()

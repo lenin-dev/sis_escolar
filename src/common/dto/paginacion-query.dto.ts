@@ -40,12 +40,12 @@ export class QuerysObligatoriasDto {
     })
     ordenar!: string;
 
-    @ApiProperty({
-        description: 'ordenar la busqueda por el nombre ingresado',
-        example: 'nombre_completo'
-    })
-    @IsString({ message: 'campo tiene que ser de tipo texto' })
-    @IsNotEmpty({ message: 'campo no puede ser vacio' })
-    campo_ordenar!: string;
+    // @ApiProperty({
+    //     description: 'ordenar la busqueda por el nombre ingresado',
+    //     example: 'nombre_completo'
+    // })
+    // @IsString({ message: 'campo tiene que ser de tipo texto' })
+    // @IsNotEmpty({ message: 'campo no puede ser vacio' })
+    // campo_ordenar!: string;
 
 }
