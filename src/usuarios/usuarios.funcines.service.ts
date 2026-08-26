@@ -12,22 +12,34 @@ export class UsuariosFuncinesService {
         const { limite, pagina, ordenar } = querys;
         const skip = (pagina - 1) * limite;
 
-        const resultado = await this.prismaService.usuario.findMany({
-            include: {
-                usuario_funcion: {
-                    include: {
-                        idfuncion: true
+        const [total, datos] = await this.prismaService.$transaction([
+            this.prismaService.usuario.count(),
+            
+            this.prismaService.usuario.findMany({
+                include: {
+                    usuario_funcion: {
+                        include: {
+                            idfuncion: true
+                        }
                     }
-                }
-            },
-            take: limite,
-            skip,
-            orderBy: {
-                fecha_creacion: ordenar.toLowerCase() as 'asc' | 'desc',
-            },
-        });
+                },
+                take: limite,
+                skip,
+                orderBy: {
+                    fecha_creacion: ordenar.toLowerCase() as 'asc' | 'desc',
+                },
+            })
+        ])
 
-        return resultado;
+        return {
+            paginacion: {
+                total,
+                pagina,
+                limite,
+                total_paginas: Math.ceil(total/limite)
+            },
+            datos
+        };
     }
 
     async addUsuFunc(id_usuario: string, body: UsuarioFuncionDto) {

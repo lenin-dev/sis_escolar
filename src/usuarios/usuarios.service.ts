@@ -14,42 +14,64 @@ export class UsuariosService {
         const { limite, pagina, ordenar } = querys;
         const skip = (pagina - 1) * limite;
 
-        const result = await this.prismaService.usuario.findMany({
-            take: limite,
-            skip,
-            orderBy: {
-                fecha_creacion: ordenar.toLowerCase() as 'asc' | 'desc',
-            },
-        });
+        const [total, datos] = await this.prismaService.$transaction([
+            this.prismaService.usuario.count(),
+            this.prismaService.usuario.findMany({
+                take: limite,
+                skip,
+                orderBy: {
+                    fecha_creacion: ordenar.toLowerCase() as 'asc' | 'desc',
+                },
+            })
+        ])
 
-        if(result.length === 0) {
+        if(datos.length === 0) {
            throw new NotFoundException('No hay datos que mostrar');
         }
-        return result;
+        return {
+            paginacion: {
+                total,
+                pagina,
+                limite,
+                promedio_paginas: Math.ceil(total/limite)
+            },
+            datos
+        };
     }
 
     async getOneUsuario(id_usuario: string, querys: QuerysObligatoriasDto) {
         const { limite, pagina, ordenar } = querys;
         const skip = (pagina - 1) * limite;
-
-        const data = await this.prismaService.usuario.findMany({
-            where: { 
-                OR: [
-                    { id_usuario: id_usuario }, 
-                    { usuario: { contains: id_usuario } }, 
-                    { nombre_completo: { contains: id_usuario } } 
-                ]
-            },
-            take: limite,
-            skip,
-            orderBy: {
-                fecha_creacion: ordenar.toLowerCase() as 'asc' | 'desc',
-            },
-        })
-        if(!data) {
+        const where = {
+            OR: [
+                { id_usuario: id_usuario }, 
+                { usuario: { contains: id_usuario } }, 
+                { nombre_completo: { contains: id_usuario } } 
+            ]
+        }
+        const [total, datos] = await this.prismaService.$transaction([
+            this.prismaService.usuario.count({ where }),
+            this.prismaService.usuario.findMany({
+                where,
+                take: limite,
+                skip,
+                orderBy: {
+                    fecha_creacion: ordenar.toLowerCase() as 'asc' | 'desc',
+                },
+            })
+        ])
+        if(!datos) {
            throw new NotFoundException('Usuario no encontrado');
         }
-        return data;
+        return {
+            paginacion: {
+                total,
+                pagina,
+                limite,
+                promedio_paginas: Math.ceil(total/limite)
+            },
+            datos
+        };
     }
 
     async createUsuario(data: CrearUsuario) {

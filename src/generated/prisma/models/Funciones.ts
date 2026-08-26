@@ -343,6 +343,14 @@ export type FuncionesScalarRelationFilter = {
   isNot?: Prisma.FuncionesWhereInput
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type FuncionesCreateNestedOneWithoutFuncion_funcionInput = {
   create?: Prisma.XOR<Prisma.FuncionesCreateWithoutFuncion_funcionInput, Prisma.FuncionesUncheckedCreateWithoutFuncion_funcionInput>
   connectOrCreate?: Prisma.FuncionesCreateOrConnectWithoutFuncion_funcionInput
